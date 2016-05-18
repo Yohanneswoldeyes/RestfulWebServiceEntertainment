@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+.innerDivSecond, .innerDivThird {
+    background-color: #FFFFFF;
+    
+}
+
+.innerDivSecond{
+   
+}
+
+.innerDivThird{
+    
+}
+.containerMain{
+    background-color: #FFFFFF;
+    border-color: #e7e7e7
+}
+
+.adamaLogo{
+    /*margin-left: 60px;*/
+}
+.uploadButton{
+    float: right;
+    
+}
+
+.first-row{
+    background-color: #f8f8f8;
+    border-color: #e7e7e7
+    margin: 0px;
+    padding: 5px;
+}
+.second-row{
+    margin-top: 5px;
+    
+}
+
+.rightVideoImages img{
+    width: 120px;
+    height: 90px;
+}
+
+#someFrame{
+    width: 630px;
+    height: 390px;
+   }
+
+.panel-footer{
+    float: right;
+}
+
+.video-title{
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
+    display: block;
+    line-height: 1.2;
+    max-height: 2.4em;
+    margin-bottom: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    padding-top: 5px;
+}
+.rightVideoDescription{
+    padding: 10px;
+}
+.accessibel_description, .status_view_count{
+   color: #767676;
+}
