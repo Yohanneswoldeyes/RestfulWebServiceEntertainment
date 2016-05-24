@@ -21,7 +21,7 @@ import com.restful.video.model.Video;
 /* I used 
 JAX-RS stands for JAVA API for RESTful Web Services
 Hibernate Object Relational Mapping (ORM) 
-*/
+ */
 
 @Path("/comment")
 public class EntertainmentComment {
@@ -29,7 +29,7 @@ public class EntertainmentComment {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public ArrayList<Comment> creatComment(Comment comment) {
+	public void creatComment(Comment comment) {
 		SessionFactory factory;
 		ArrayList<Comment> commentList = null;
 		try{
@@ -43,10 +43,12 @@ public class EntertainmentComment {
 			throw new ExceptionInInitializerError(ex); 
 		}
 		Session session = factory.openSession();
-		Transaction tx = null;
-		Comment commentSave = new Comment();
+		Comment commentSave = null;
+		Transaction tx = null;  
 
 		try{
+			tx = session.beginTransaction();
+			commentSave = new Comment();
 			commentSave.setComment(comment.getComment());
 			commentSave.setEmail(comment.getEmail());
 			commentSave.setEntertainmentTitle(comment.getEntertainmentTitle());
@@ -54,13 +56,10 @@ public class EntertainmentComment {
 			commentSave.setUserName(comment.getUserName());
 			commentSave.setVideoInfoUrl(comment.getUrl());		
 			commentSave.setVideoType(comment.getEntertainmentTitle());
-			tx = session.beginTransaction();
 			session.save(commentSave);
-			tx.commit();
-			commentList =  getAllComments(comment.getUrl());
+			tx.commit(); 
 
-			//test commentList
-			//
+			//			test commentList
 			//			for (Iterator iterator = 
 			//					commentList.iterator(); iterator.hasNext();){
 			//				Comment employee = (Comment) iterator.next(); 
@@ -70,26 +69,23 @@ public class EntertainmentComment {
 			//				System.out.println("  date: " + employee.getDate()); 
 			//			}
 
-		}catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace(); 
-		}finally {
+		}catch (Exception ex) {  
+			ex.printStackTrace();  
+			tx.rollback();  
+		}  
+		finally {
 			session.close(); 
+			factory.close();
 		}
-		return commentList; 
 	}
-
-
 
 	@Path("/search")
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public ArrayList<Comment> getCommentsByUrl(String url) {
-
 		SessionFactory factory;
 		ArrayList<Comment> commentList = new ArrayList<Comment>();
-
 		try{
 			factory = new Configuration().
 					configure().
@@ -102,7 +98,6 @@ public class EntertainmentComment {
 		}
 		Session session = factory.openSession();
 		Transaction tx = null;
-
 		try{
 			tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(Comment.class);
@@ -111,12 +106,12 @@ public class EntertainmentComment {
 				commentList = (ArrayList<Comment>) criteria.list();
 			}
 			session.getTransaction().commit();
-
 		}catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace(); 
 		}finally {
-			session.close(); 
+			session.close();
+			factory.close();
 		}
 		return commentList;
 	}
@@ -125,10 +120,8 @@ public class EntertainmentComment {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public ArrayList<Comment> getAllComments(@PathParam("url") String  url) {
-
 		SessionFactory factory;
 		ArrayList<Comment> commentList = new ArrayList<Comment>();
-
 		try{
 			factory = new Configuration().
 					configure().
@@ -140,10 +133,8 @@ public class EntertainmentComment {
 			throw new ExceptionInInitializerError(ex); 
 		}
 		Session session = factory.openSession();
-		Transaction tx = null;
-
 		try{
-			tx = session.beginTransaction();
+			session.beginTransaction();
 			Criteria criteria = session.createCriteria(Comment.class);
 			criteria.add(Restrictions.eq("url", url));
 			if(criteria.list() != null){
@@ -152,10 +143,10 @@ public class EntertainmentComment {
 			session.getTransaction().commit();
 
 		}catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
 			e.printStackTrace(); 
 		}finally {
 			session.close(); 
+			factory.close();
 		}
 		return commentList;
 	}
@@ -196,6 +187,7 @@ public class EntertainmentComment {
 			e.printStackTrace(); 
 		}finally {
 			session.close(); 
+			factory.close();
 		}
 		return videoList;
 	}
