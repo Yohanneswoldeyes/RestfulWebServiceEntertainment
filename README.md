@@ -1,5 +1,5 @@
 # RestfulWebServiceEntertainment
-Technology  Used
+I used the following computer languages and frameworks
 1. JAX-RS stands for JAVA API for RESTful Web Services
 2. Hibernate Object Relational Mapping (ORM) 
 3. AngularJS
