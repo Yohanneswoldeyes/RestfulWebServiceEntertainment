@@ -1,8 +1,8 @@
 <b><u>Youtube page</u></b><br/><br/>
-<b> on this page, you should able to select videos from and able to send comment with a valid email.<br/>
+ on this page, you should able to select videos from and able to send comment with a valid email.<br/>
     The client and server talk to each other via messages. Client send a request to the server, and <br/>
-    the server replies with a response.<br/></b><br/>
-I used the following programming languages and frameworks to demonstrate<br/>
+    the server replies with a response.<br/><br/>
+I used the following programming languages and frameworks to demonstrate<br/><br/>
 1. JAX-RS stands for JAVA API for RESTful Web Services<br/>
 2. Hibernate Object Relational Mapping (ORM) <br/>
 3. AngularJS<br/>
