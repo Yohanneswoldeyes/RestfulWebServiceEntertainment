@@ -3,11 +3,15 @@
 <head>
 <title>Show Entertainment</title>
 <link href="css/styles.css" rel="stylesheet">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link href="css/layout.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script type="text/javascript" src="javascript/app.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -22,7 +26,7 @@
 			<div class="col-sm-6 second">
 				<div class="input-group searchEntertainment">
 					<input type="Search" placeholder="Search..." class="form-control " />
-					<div class="input-group-btn" ng-click="search()">
+					<div class="input-group-btn">
 						<button class="btn btn-info">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
@@ -30,8 +34,8 @@
 				</div>
 			</div>
 			<div class="col-sm-2 first">
-				<button class="btn btn-info adamaLogo" ng-click="upload()">
-					<span class="glyphicon glyphicon-upload")>Upload</span>
+				<button class="btn btn-info adamaLogo">
+					<span class="glyphicon glyphicon-upload">Upload</span>
 				</button>
 			</div>
 		</div>
@@ -45,7 +49,7 @@
 						<input class="form-control" type="hidden"
 							ng-model="i.entertainmentTitle">
 						<p id="page_title">
-							<b> Amharic Entertainment </b>
+							<b> {{movieTitle}} </b><br /> {{count}}
 						<p id="movietitle">{{iframurl}}</p>
 						<hr>
 					</div>
@@ -61,36 +65,33 @@
 									<p>{{a.comment}}</p></td>
 							</tr>
 						</table>
+
 					</div>
 				</div>
 				<form ng-submit="submitComment()" id="commentsForm"
 					name="commentsForm">
 					<fieldset>
-					
-					
 						<legend>Post a comment</legend>
 						<div class="alert alert-danger" ng-show="c.alert">There was
 							an error posting your comment, please try again later</div>
-						<div id="name-group" class="form-group-lg">
-						<label for="email" class="control-label">User Name</label>
-	                        <input type="text"
-	                               required
-	                               name="name"
-	                               ng-model="c.userName"
-	                               class="form-control"
-	                               placeholder="user name">
-                        </div>
+						<div class="form-group name-group">
+							<div class="control-field">
+								<label for="userName" class="control-label">UserName</label> <input
+									class="form-control" id="userName" type="text" value=""
+									tabindex="1" ng-model="c.userName">
+							</div>
+						</div>
 						<div class="form-group email-group">
 							<label for="email" class="control-label">Email</label>
 							<div class="control-field">
-								<input class="form-control" required id="email" type="email" value=""
-									tabindex="2" ng-model="c.email" placeholder="email">
+								<input class="form-control" id="email" type="email" value=""
+									tabindex="2" ng-model="c.email">
 							</div>
 						</div>
 						<div class="form-group comment-group">
 							<label for="comment" class="control-label">Comment</label>
 							<div class="control-field">
-								<textarea class="form-control " cols="30" rows="5"
+								<textarea class="form-control" cols="30" rows="5"
 									id="comment-textarea" tabindex="3" ng-model="c.comment"
 									required></textarea>
 							</div>
@@ -111,7 +112,7 @@
 			<div class="col-sm-4 third">
 				<div class="innerDivThird well" ng-repeat="v in videos">
 					<table>
-						<tr ng-click="changeUrlForVideo(v.url)">
+						<tr ng-click="changeUrlForVideo(v.url, v.title, v.count)">
 							<td class="rightVideoImages"><a href="#"> <img
 									class="adamaLogo" src="{{ v.image}}" /></a></td>
 							<td class="rightVideoDescription"><span class="video-title">{{v.title}}</span>
