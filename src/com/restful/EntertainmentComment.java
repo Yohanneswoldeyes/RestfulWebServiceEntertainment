@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.restful.comment.model.Comment;
@@ -79,13 +80,17 @@ public class EntertainmentComment {
 		}
 	}
 
+
+
 	@Path("/search")
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public ArrayList<Comment> getCommentsByUrl(String url) {
+
 		SessionFactory factory;
 		ArrayList<Comment> commentList = new ArrayList<Comment>();
+		videoViewedCount(url);
 		try{
 			factory = new Configuration().
 					configure().
@@ -122,6 +127,7 @@ public class EntertainmentComment {
 	public ArrayList<Comment> getAllComments(@PathParam("url") String  url) {
 		SessionFactory factory;
 		ArrayList<Comment> commentList = new ArrayList<Comment>();
+
 		try{
 			factory = new Configuration().
 					configure().
@@ -137,6 +143,7 @@ public class EntertainmentComment {
 			session.beginTransaction();
 			Criteria criteria = session.createCriteria(Comment.class);
 			criteria.add(Restrictions.eq("url", url));
+			criteria.addOrder(Order.desc("date"));
 			if(criteria.list() != null){
 				commentList = (ArrayList<Comment>) criteria.list();
 			}
@@ -150,6 +157,49 @@ public class EntertainmentComment {
 		}
 		return commentList;
 	}
+
+	public void videoViewedCount(String  url) {
+		System.out.println("url  " + url);
+		SessionFactory factory;
+		ArrayList<Video> videoList = new ArrayList<Video>();
+		try{
+			factory = new Configuration().
+					configure().
+					//addPackage("ccom.restful.video.model") //add package if used.
+					addAnnotatedClass(com.restful.video.model.Video.class).
+					buildSessionFactory();
+		}catch (Throwable ex) { 
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex); 
+		}
+		Session session = factory.openSession();
+		Transaction tx = null;
+
+		try{
+			tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(Video.class);
+			criteria.add(Restrictions.eq("url", url));
+			criteria.setMaxResults(1);
+			Video videoCount =  (Video)criteria.uniqueResult();
+			if(videoCount != null){
+				int numberOfViewers = videoCount.getCount() + 1;
+				videoCount.setCount(numberOfViewers);
+				session.update(videoCount);
+				session.getTransaction().commit();
+			}
+
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		}finally {
+			session.close(); 
+			factory.close();
+		}
+
+	}
+
+
+
 
 
 	@Path("/videos/{videoType}")
