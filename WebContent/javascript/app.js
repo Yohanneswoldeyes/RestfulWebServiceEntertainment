@@ -2,9 +2,9 @@
 	var app = angular.module("app", []);
 	app.controller("HttpCtrl", function($scope, $http) {
 		//default url
-		var url = "https://www.youtube.com/embed/52AjNsofvNQ?=rel=0"; 
-		var title = "Best Trucks in Football History";
-		var count = 5678;
+		var url = ""; 
+		var title = "";
+		var count = "";
 		jQuery(".iframeSource").attr("src", url );
 		$scope.movieTitle = title;
 		$scope.count = count;
@@ -20,7 +20,6 @@
 				alert("AJAX failed to get data, status=" + status);
 			});
 		};
-
 		//calling the default call 
 		$scope.defaultcall(url);
 		//get videos passing a videotype so we can you this method for different type of videoTypes
@@ -30,24 +29,24 @@
 			var response = $http.get('/RestfulWebServiceEntertainment/rest/comment/videos/'+  videoType);
 			response.success(function(data) {
 				$scope.videos = data;
+				if($scope.videos[0] != null){
+					jQuery(".iframeSource").attr("src", $scope.videos[0].url );
+					$scope.movieTitle = $scope.videos[0].title;
+					$scope.count = $scope.videos[0].count;
+				}
 			});
-
 			response.error(function(data, status, headers, config) {
 				alert("AJAX failed to get data, status=" + status);
 			});
 		};
-
 		//calling the get video method to
 		$scope.getVideos();
-
 		$scope.upload = function(){
 			alert("Coming Soon !!!")
 		};
-
 		$scope.search = function(){
 			alert("Coming Soon !!!")
 		};
-
 		// change the url for the iframe when user select or click another video
 		$scope.changeUrlForVideo = function(url, title, count){
 			jQuery(".iframeSource").attr("src", url );
@@ -55,13 +54,11 @@
 			$scope.movieTitle = title;
 			$scope.count = count;
 		};
-
 		//submit comment to the server. Each video has its own comment area.
 		$scope.submitComment = function() {
 			$scope.jsonObj = $scope.c;
 			$scope.jsonObj.entertainmentTitle ="amharicEntertainment";
 			$scope.jsonObj.url =jQuery(".iframeSource").attr("src");
-
 			var response = $http.post('/RestfulWebServiceEntertainment/rest/comment/add', $scope.jsonObj);
 			response.success(function(data) {
 				$scope.comments = data;
@@ -70,7 +67,6 @@
 				angular.forEach(data, function(element) {
 					console.log("[main] comment: " + element.name);
 				});
-
 				$scope.defaultcall($scope.jsonObj.url);
 				$scope.movieTitle = $scope.jsonObj.title;
 				$scope.count = $scope.jsonObj.count;
