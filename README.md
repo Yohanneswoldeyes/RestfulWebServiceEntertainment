@@ -2,7 +2,7 @@
  On this page, you should able to select video and able to send comments<br/>
     The client and server talk to each other via messages using http mathods. Client send a request to the server, and <br/>
     the server replies with a response.<br/>
-I used the following programming languages and frameworks to demonstrate RESTful Services<br/><br/>
+I used the following programming languages and frameworks to demonstrate RESTful Services<br/>
 1. JAX-RS stands for JAVA API for RESTful Web Services<br/>
 2. Hibernate Object Relational Mapping (ORM) <br/>
 3. AngularJS<br/>
