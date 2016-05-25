@@ -11,9 +11,9 @@ I used the following programming languages and frameworks to demonstrate RESTful
 6. Bootstrap<br/>
 7. HTML<br/>
 8. CSS<br/>
-9. Java
-10. mySQL
+9. Java<br/>
+10. mySQL <br/>
 
 
 Please go to http://adamatube.com:8080/RestfulWebServiceEntertainment/ 
-to check it out. 
+to see how it works. 
