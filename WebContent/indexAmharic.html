@@ -17,7 +17,6 @@
 </head>
 <body ng-controller="HttpCtrl as app">
 	<div class="container-fluid containerMain">
-
 		<div class="row first-row">
 			<div class="col-sm-2 first">
 				<a href="#"> <img class="adamaLogo"
@@ -27,14 +26,14 @@
 				<div class="input-group searchEntertainment">
 					<input type="Search" placeholder="Search..." class="form-control " />
 					<div class="input-group-btn">
-						<button class="btn btn-info">
+						<button class="btn btn-info" ng-click="search()">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-2 first">
-				<button class="btn btn-info adamaLogo">
+				<button class="btn btn-info adamaLogo" ng-click="upload()")>
 					<span class="glyphicon glyphicon-upload">Upload</span>
 				</button>
 			</div>
@@ -49,12 +48,13 @@
 						<input class="form-control" type="hidden"
 							ng-model="i.entertainmentTitle">
 						<p id="page_title">
-							<b> {{movieTitle}} </b><br /> {{count}}
+							<b> {{movieTitle}} </b><br /> {{count }} Views
 						<p id="movietitle">{{iframurl}}</p>
 						<hr>
 					</div>
 				</div>
-				<div class="comment-renderer-content" ng-repeat="a in comments">
+				<div class="comment-renderer-content"
+					ng-repeat="a in comments | orderBy : '-date' ">
 					<div class="comment-renderer-header">
 						<table>
 							<tr>
