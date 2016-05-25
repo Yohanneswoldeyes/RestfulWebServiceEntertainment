@@ -1,5 +1,5 @@
 <b><u>YouTube page</u></b><br/>
- On this page, you should able to select video and able to send comments<br/>
+ On this page, you should able to select video and able to send comments.<br/>
     The client and server talk to each other via messages using http mathods. Client send a request to the server, and <br/>
     the server replies with a response.<br/>
 I used the following programming languages and frameworks to demonstrate RESTful Services<br/>
